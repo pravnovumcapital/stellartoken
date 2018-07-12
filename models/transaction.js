@@ -6,7 +6,8 @@ var TransactionSchema = new Schema(
         name: {type: String, max: 100},
         date_of_birth: {type: Date},
         phone_number: {type: Number},
-        xlm: {type: Number}
+        xlm: {type: Number},
+        secret_key: {type: String, max: 100}
     }
 );
 
