@@ -1,5 +1,6 @@
 var Transaction = require('../models/transaction');
 var accountController = require('./accountController');
+var transactionId;
 var icoToken = {
                 DA: process.env.DA,
                 GA: process.env.IA,
@@ -17,25 +18,26 @@ exports.register = function(req, res) {
     });
     transaction.save(function(err) {
         if (err) {return next(err);}
-        res.json({code: 200, message: 'You send successfully', transaction_id: transaction._id});
+        transactionId = transaction._id;
+        buyTokens(req, res);
     });
 }
 
 function changeTrust(req, res) {
-    caSecret = req.body.caSecret;
+    caSecret = req.body.secret_key;
     accountController.addTrustline(icoToken,caSecret,function(response){
              console.log('Trust line added!!!!!');
-             res.json({message: 'success', code: 200});
+             buyTokens(req, res);
      })
 }
 
-function buyTokens() {
-    caSecret = req.body.caSecret;
-    amount = req.body.amount;
+function buyTokens(req, res) {
+    caSecret = req.body.secret_key;
+    amount = req.body.xlm;
     
-    module.exports.addNewOffer(icoToken,caSecret,amount,function(response){
+    accountController.addNewOffer(icoToken,caSecret,amount,function(response){
         console.log('Token purchased');
-        res.json({message: 'success', code: 200});
+        res.json({message: 'success', code: 200, transaction_id: transactionId});
     })
 }
 
