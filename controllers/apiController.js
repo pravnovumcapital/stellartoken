@@ -11,9 +11,8 @@ exports.register = function(req, res) {
     });
     transaction.save(function(err) {
         if (err) {return next(err);}
-        res.json({message: 'success', code: 200});
+        res.json({code: 200, message: 'You send successfully', transaction_id: transaction._id});
     });
-    
 }
 
 function changeTrust() {

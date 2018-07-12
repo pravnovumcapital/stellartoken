@@ -2,10 +2,12 @@ extends layout
 
 block content
     script.
+        var transaction_id;
         $(document).ready(function(){
             
         })
         function registerTransaction(e) {
+            $('#loading').show();
             e.preventDefault();
             $.ajax({url:'http://localhost:3000/api/register', 
                 type: 'post',
@@ -15,10 +17,24 @@ block content
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.info(data);
+                    $('#loading').hide();
+                    if(data.code == 200) {
+                        $('#title').html(data.message);
+                        $('#message').html("You made the transaction successfully. Go to see the transaction detail.");
+                        $('#modal_button').html('See detail');
+                        $('#myModal').modal('show');
+                        transaction_id = data.transaction_id;
+                    } else {
+                        alert(data.message);
+                    } 
                 }
             });
         }
+        function gotoDetail() {
+            window.location.replace('http://localhost:3000/register/' + transaction_id);
+        }
+    div#loading.loading(hidden='true')
+
     h1=title
 
     form#registerForm
@@ -41,3 +57,13 @@ block content
             label(for='phone_number') Phone number:
             input.form-control(type='number' name='phone_number' placeholder='+84984217085')
         button.btn.btn-primary(return onclick='registerTransaction(event)') Buy Tokens
+    #myModal.modal.fade(role="dialog")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button" data-dismiss="modal") ×
+                    h4#title.modal-title Modal Header
+                .modal-body
+                    p#message Some text in the modal.
+                .modal-footer
+                    button#modal_button.btn.btn-default(type="button" data-dismiss="modal" onclick="gotoDetail()") Close
