@@ -1,10 +1,14 @@
 var StellarSdk = require('stellar-sdk');
 StellarSdk.Network.useTestNetwork();
+if(process.env.NODE_ENV == 'production')
+var server = new StellarSdk.Server('https://horizon.stellar.org');
+else
+var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 //var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 exports.test = function (req,res) {
 	var caSecret = req.params.secret;
 	var amount = req.params.amount;
-	var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+	//var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 	var sourceKeys = StellarSdk.Keypair
 	  .fromSecret(caSecret);
 	var destinationId = process.env.DA;
@@ -84,8 +88,7 @@ exports.test = function (req,res) {
 }
 
 exports.addTrustline = function (icoToken,caSecret,callback) {
-	//console.log('2222');
-	 var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+	 
 	 var customerKey = StellarSdk.Keypair
 	  .fromSecret(caSecret);
 	  var transaction;
@@ -94,6 +97,7 @@ exports.addTrustline = function (icoToken,caSecret,callback) {
 	  .catch(function(err) {
         console.log('An error has occured:');
         console.log(err);
+        res.json({message: 'invalid secret key', code: 400});
       })
 	  // If there was no error, load up-to-date information on your account.
 	  .then(function() {
@@ -127,7 +131,7 @@ exports.addTrustline = function (icoToken,caSecret,callback) {
 }
 
 exports.transfer = function(destinationId,sourceSecret,icoToken,amount,callback){
-	var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+	//var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 	var sourceKeys = StellarSdk.Keypair
 	  .fromSecret(sourceSecret);
 	//var destinationId = destination;
@@ -207,13 +211,12 @@ exports.manageOffer = function(req,res){
 }
 exports.addNewOffer = function(icoToken,caSecret,amount,callback){
 		var sourceKeys = StellarSdk.Keypair.fromSecret(caSecret);
-		var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 		var account = server.loadAccount(sourceKeys.publicKey())
 		  // If the account is not found, surface a nicer error message for logging.
 		  .catch(function(err) {
 	        console.log('An error has occured:');
 	        console.log(err);
-	        res.send('invalid customer!');
+	        res.json({message: 'invalid secret key', code: 400});
 	        //return false;
 	      })
 	  		// If there was no error, load up-to-date information on your account.
