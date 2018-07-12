@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    script.
+        $(document).ready(function(){
+            
+        })
+        function registerTransaction() {
+            $.ajax({url:'http://localhost:3000/api/register', 
+                type: 'post',
+                data: $('#registerForm').serialize(),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.info(data);
+                }
+            });
+        }
+    h1=title
+
+    form#registerForm
+        div.form-group
+            label(for='secret_key') Secret key:
+            input.form-control(type='text', placeholder='0xaaaaaa' name='secret_key')
+        div.form-group
+            label(for='xlm') XLM:
+            input.form-control(type='number', placeholder='200' name='xlm' value=(undefined===xlm?'':xlm) )
+        div.form-group
+            label(for='email') Email:
+            input#email.form-control(type='email', name='email')
+        div.form-group
+            label(for='name') Name:
+            input.form-control(type='text', name='name' )
+        div.form-group
+            label(for='date_of_birth') Date of birth:
+            input.form-control(type='date', name='date_of_birth')
+        .form-group
+            label(for='phone_number') Phone number:
+            input.form-control(type='number' name='phone_number' placeholder='+84984217085')
+        button.btn.btn-primary(onclick='registerTransaction()') Buy Tokens
