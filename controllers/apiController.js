@@ -1,5 +1,11 @@
 var Transaction = require('../models/transaction');
-
+var accountController = require('./accountController');
+var icoToken = {
+                DA: process.env.DA,
+                GA: process.env.IA,
+                code: process.env.CODE,
+                limit: process.env.LIMIT
+            };
 exports.register = function(req, res) {
     var transaction = new Transaction({
         email: req.body.email,
@@ -15,10 +21,21 @@ exports.register = function(req, res) {
     });
 }
 
-function changeTrust() {
-
+function changeTrust(req, res) {
+    caSecret = req.body.caSecret;
+    accountController.addTrustline(icoToken,caSecret,function(response){
+             console.log('Trust line added!!!!!');
+             res.json({message: 'success', code: 200});
+     })
 }
 
 function buyTokens() {
-
+    caSecret = req.body.caSecret;
+    amount = req.body.amount;
+    
+    module.exports.addNewOffer(icoToken,caSecret,amount,function(response){
+        console.log('Token purchased');
+        res.json({message: 'success', code: 200});
+    })
 }
+
