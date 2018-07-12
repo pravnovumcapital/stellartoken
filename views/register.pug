@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h1=title
+
+    form(method='POST' action='')
+        div.form-group
+            label(for='secret_key') Secret key:
+            input.form-control(type='text', placeholder='0xaaaaaa' name='secret_key')
+        div.form-group
+            label(for='xlm') XLM:
+            input.form-control(type='number', placeholder='200' name='xlm' value=(undefined===xlm?'':xlm) )
+        div.form-group
+            label(for='email') Email:
+            input.form-control(type='email', name='email')
+        div.form-group
+            label(for='name') Name:
+            input.form-control(type='text', name='name' )
+        div.form-group
+            label(for='date_of_birth') Date of birth:
+            input.form-control(type='date', name='date_of_birth')
+        .form-group
+            label(for='phone_number') Phone number:
+            input.form-control(type='number' name='phone_number' placeholder='+84984217085')
+        button.btn.btn-primary(type='submit') Buy Tokens
