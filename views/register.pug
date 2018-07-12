@@ -1,9 +1,26 @@
 extends layout
 
 block content
+    script.
+        $(document).ready(function(){
+            
+        })
+        function registerTransaction() {
+            $.ajax({url:'http://localhost:3000/api/register', 
+                type: 'post',
+                data: $('#registerForm').serialize(),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.info(data);
+                }
+            });
+        }
     h1=title
 
-    form(method='POST' action='')
+    form#registerForm
         div.form-group
             label(for='secret_key') Secret key:
             input.form-control(type='text', placeholder='0xaaaaaa' name='secret_key')
@@ -12,7 +29,7 @@ block content
             input.form-control(type='number', placeholder='200' name='xlm' value=(undefined===xlm?'':xlm) )
         div.form-group
             label(for='email') Email:
-            input.form-control(type='email', name='email')
+            input#email.form-control(type='email', name='email')
         div.form-group
             label(for='name') Name:
             input.form-control(type='text', name='name' )
@@ -22,4 +39,4 @@ block content
         .form-group
             label(for='phone_number') Phone number:
             input.form-control(type='number' name='phone_number' placeholder='+84984217085')
-        button.btn.btn-primary(type='submit') Buy Tokens
+        button.btn.btn-primary(onclick='registerTransaction()') Buy Tokens

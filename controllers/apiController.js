@@ -1,6 +1,6 @@
 var Transaction = require('../models/transaction');
 
-exports.register = function(req, res, next) {
+exports.register = function(req, res) {
     var transaction = new Transaction({
         email: req.body.email,
         name: req.body.name,
@@ -11,6 +11,15 @@ exports.register = function(req, res, next) {
     });
     transaction.save(function(err) {
         if (err) {return next(err);}
-        // res.redirect(transaction.url);
+        res.json({message: 'success', code: 200});
     });
+    
+}
+
+function changeTrust() {
+
+}
+
+function buyTokens() {
+
 }
