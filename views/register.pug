@@ -5,7 +5,8 @@ block content
         $(document).ready(function(){
             
         })
-        function registerTransaction() {
+        function registerTransaction(e) {
+            e.preventDefault();
             $.ajax({url:'http://localhost:3000/api/register', 
                 type: 'post',
                 data: $('#registerForm').serialize(),
@@ -39,4 +40,4 @@ block content
         .form-group
             label(for='phone_number') Phone number:
             input.form-control(type='number' name='phone_number' placeholder='+84984217085')
-        button.btn.btn-primary(onclick='registerTransaction()') Buy Tokens
+        button.btn.btn-primary(return onclick='registerTransaction(event)') Buy Tokens
