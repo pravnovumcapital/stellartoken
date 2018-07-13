@@ -19,7 +19,8 @@ exports.register = function(req, res) {
     transaction.save(function(err) {
         if (err) {return next(err);}
         transactionId = transaction._id;
-        buyTokens(req, res);
+        changeTrust(req, res);
+        // buyTokens(req, res);
     });
 }
 

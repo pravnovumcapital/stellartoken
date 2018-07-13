@@ -9,7 +9,7 @@ block content
         function registerTransaction(e) {
             $('#loading').show();
             e.preventDefault();
-            $.ajax({url:'http://localhost:3000/api/register', 
+            $.ajax({url:$('#apiUrl').val() + '/api/register', 
                 type: 'post',
                 data: $('#registerForm').serialize(),
                 headers: {
@@ -31,7 +31,7 @@ block content
             });
         }
         function gotoDetail() {
-            window.location.replace('http://localhost:3000/register/' + transaction_id);
+            window.location.replace($('#apiUrl').val() + '/register/' + transaction_id);
         }
     div#loading.loading(hidden='true')
 
@@ -53,6 +53,7 @@ block content
         div.form-group
             label(for='date_of_birth') Date of birth:
             input.form-control(type='date', name='date_of_birth')
+            input#apiUrl.form-control(type='hidden', name='',value=apiUrl)
         .form-group
             label(for='phone_number') Phone number:
             input.form-control(type='number' name='phone_number' placeholder='+84984217085')

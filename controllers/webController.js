@@ -1,7 +1,7 @@
 var Transaction = require('../models/transaction');
 var accountController = require('../controllers/accountController')
 exports.register = function(req, res, next) {
-    res.render('register', {title: 'Wpay tokens'});
+    res.render('register', {title: 'Wpay tokens', apiUrl: process.env.API_URL});
 }
 
 exports.register_post = function(req, res, next) {
