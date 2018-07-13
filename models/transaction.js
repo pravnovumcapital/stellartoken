@@ -12,7 +12,10 @@ var TransactionSchema = new Schema(
 );
 
 TransactionSchema.virtual('url').get(function(){
-    return '/register/' + this._id;
+    return '/register/detail/' + this._id;
 });
 
+TransactionSchema.virtual('home').get(function() {
+    return '/register/' + this.email;
+});
 module.exports = mongoose.model('Transaction', TransactionSchema);

@@ -2,14 +2,14 @@ extends layout
 
 block content
     script.
-        var transaction_id;
+        var transaction_url;
         $(document).ready(function(){
             
         })
         function registerTransaction(e) {
             $('#loading').show();
             e.preventDefault();
-            $.ajax({url:$('#apiUrl').val() + '/api/register', 
+            $.ajax({url:'/api/register', 
                 type: 'post',
                 data: $('#registerForm').serialize(),
                 headers: {
@@ -23,7 +23,7 @@ block content
                         $('#message').html("You made the transaction successfully. Go to see the transaction detail.");
                         $('#modal_button').html('See detail');
                         $('#myModal').modal('show');
-                        transaction_id = data.transaction_id;
+                        transaction_url = data.transaction_url;
                     } else {
                         alert(data.message);
                     } 
@@ -31,7 +31,7 @@ block content
             });
         }
         function gotoDetail() {
-            window.location.replace($('#apiUrl').val() + '/register/' + transaction_id);
+            window.location.replace(transaction_url);
         }
     div#loading.loading(hidden='true')
 
@@ -46,14 +46,13 @@ block content
             input.form-control(type='number', placeholder='200' name='xlm' value=(undefined===xlm?'':xlm) )
         div.form-group
             label(for='email') Email:
-            input#email.form-control(type='email', name='email')
+            input#email.form-control(type='email', name='email' value=(undefined===email?'':email))
         div.form-group
             label(for='name') Name:
             input.form-control(type='text', name='name' )
         div.form-group
             label(for='date_of_birth') Date of birth:
             input.form-control(type='date', name='date_of_birth')
-            input#apiUrl.form-control(type='hidden', name='',value=apiUrl)
         .form-group
             label(for='phone_number') Phone number:
             input.form-control(type='number' name='phone_number' placeholder='+84984217085')

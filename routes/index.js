@@ -6,7 +6,7 @@ var accountController = require('../controllers/accountController');
 router.get('/', function(req, res, next) {
 	//console.log('Now the value for FOO is:', process.env.DA);
 	console.log('Now the value for ENV is:', process.env.NODE_ENV);
-  res.redirect('/register');
+  res.redirect('/register/hello@novum.capital');
 });
 
 

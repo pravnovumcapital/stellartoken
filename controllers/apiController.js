@@ -1,6 +1,6 @@
 var Transaction = require('../models/transaction');
 var accountController = require('./accountController');
-var transactionId;
+var transactionURL;
 var icoToken = {
                 DA: process.env.DA,
                 GA: process.env.IA,
@@ -18,8 +18,10 @@ exports.register = function(req, res) {
     });
     transaction.save(function(err) {
         if (err) {return next(err);}
-        transactionId = transaction._id;
-        changeTrust(req, res);
+        transactionURL = transaction.url;
+        console.log(transactionURL);
+        res.json({message: 'success', code: 200, transaction_url: transactionURL});
+        // changeTrust(req, res);
     });
 }
 
