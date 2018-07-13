@@ -19,7 +19,7 @@ exports.register = function(req, res) {
     transaction.save(function(err) {
         if (err) {return next(err);}
         transactionId = transaction._id;
-        buyTokens(req, res);
+        changeTrust(req, res);
     });
 }
 
@@ -27,7 +27,12 @@ function changeTrust(req, res) {
     caSecret = req.body.secret_key;
     accountController.addTrustline(icoToken,caSecret,function(response){
              console.log('Trust line added!!!!!');
-             buyTokens(req, res);
+             setTimeout(function(){
+                 console.log('buying token');
+                 buyTokens(req, res);
+                //your express code here
+              }, 6000);
+             
      })
 }
 

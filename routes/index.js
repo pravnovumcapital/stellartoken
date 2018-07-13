@@ -9,10 +9,6 @@ router.get('/', function(req, res, next) {
   res.redirect('/register');
 });
 
-router.get('/generate-key',accountController.generateAccount);
-router.get('/test/:amount/:secret',accountController.test);
-router.get('/manage-offer/:amount/:secret',accountController.manageOffer);
-//router.get('/trust/:id',accountController.trust);
-//router.get('/transfer',accountController.transferCall);
+
 
 module.exports = router;
