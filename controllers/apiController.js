@@ -10,11 +10,11 @@ var icoToken = {
 exports.register = function(req, res) {
     var transaction = new Transaction({
         email: req.body.email,
-        name: req.body.name,
-        date_of_birth: req.body.date_of_birth,
-        phone_number: req.body.phone_number,
-        xlm: req.body.xlm,
-        secret_key: req.body.secret_key
+        expect_xlm: req.body.xlm,
+        real_xlm: 0,
+        real_wgp: 0,
+        secret_key: req.body.secret_key,
+        status: 'Pending'
     });
     transaction.save(function(err) {
         if (err) {return next(err);}

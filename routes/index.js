@@ -9,6 +9,9 @@ router.get('/', function(req, res, next) {
   res.redirect('/register/hello@novum.capital');
 });
 
-
+router.get('/register', function(req, res, next) {
+	//console.log('Now the value for FOO is:', process.env.DA);
+  res.redirect('/register/hello@novum.capital');
+});
 
 module.exports = router;
