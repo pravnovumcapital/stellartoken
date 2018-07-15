@@ -1,6 +1,6 @@
 var Transaction = require('../models/transaction');
 var accountController = require('./accountController');
-var transactionId;
+var transactionURL;
 var icoToken = {
                 DA: process.env.DA,
                 GA: process.env.IA,

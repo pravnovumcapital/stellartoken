@@ -1,15 +1,12 @@
 var Transaction = require('../models/transaction');
 var accountController = require('../controllers/accountController')
 exports.register = function(req, res, next) {
-    res.render('register', {title: 'Wpay tokens'});
+    res.render('register', {title: 'Wpay tokens', email: req.params.email});
 }
 
 exports.register_post = function(req, res, next) {
     var transaction = new Transaction({
         email: req.body.email,
-        name: req.body.name,
-        date_of_birth: req.body.date_of_birth,
-        phone_number: req.body.phone_number,
         xlm: req.body.xlm,
         secret_key: req.body.secret_key
     });
