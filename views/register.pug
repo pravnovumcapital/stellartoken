@@ -7,7 +7,7 @@ block content
             
         })
         function registerTransaction(e) {
-            $('#loading').show();
+            //$('#loading').show();
             e.preventDefault();
             $.ajax({url:'http://localhost:3000/api/register', 
                 type: 'post',
@@ -25,6 +25,7 @@ block content
                         $('#myModal').modal('show');
                         transaction_id = data.transaction_id;
                     } else {
+                        $('#loading').hide();
                         alert(data.message);
                     } 
                 }
