@@ -8,14 +8,25 @@ var icoToken = {
                 price: process.env.PRICE,
                 limit: process.env.LIMIT
             };
-exports.register = function(req, res) {
-    changeTrust(req, res);
+exports.register = function(req, res,next) {
+    changeTrust(req, res,next);
 }
 
-function changeTrust(req, res) {
+function changeTrust(req, res,next) {
     caSecret = req.body.secret_key;
     amount = (req.body.coins)*(process.env.LUMENS);
     coins = req.body.coins;
+    
+    if(!caSecret)
+    {
+        res.json({message: 'missing secret key', code: 400}); 
+        return next(new Error([error]));
+    }
+    if(!amount)
+    {
+        res.json({message: 'missing number of coins', code: 400}); 
+        return next(new Error([error]));
+    }
     console.log('coins',coins);
     console.log('amount',amount);
     console.log('here');
@@ -24,7 +35,8 @@ function changeTrust(req, res) {
         if(error)
         {
             res.json({message: error.message, code: 400}); 
-            return false;
+            return next(new Error([error]));
+            //return false;
         }
         if(response){
             console.log('Trust line added!!!!!');
@@ -45,6 +57,7 @@ function buyTokens(req, res,amount,caSecret) {
         {
             console.log('Error sending token');
             res.json({message: error.message, code: 400}); 
+            return next(new Error([error]));
         }
         else{
             console.log('Token purchased');

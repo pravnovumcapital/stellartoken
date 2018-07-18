@@ -48,7 +48,7 @@ app.use('/api', apiRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
-var server = app.listen(8005, function() {
+var server = app.listen(80, function() {
   console.log('Ready on port %d', server.address().port);
 });
 // error handler
