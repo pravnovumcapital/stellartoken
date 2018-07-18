@@ -4,6 +4,8 @@ var router = express.Router();
 var accountController = require('../controllers/accountController');
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  //console.log('Now the value for FOO is:', process.env.NODE_ENV);
+  res.json({message: 'working', code: 200}); 
   res.redirect('/register');
 });
 

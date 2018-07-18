@@ -17,11 +17,13 @@ function changeTrust(req, res) {
     amount = (req.body.coins)*(process.env.LUMENS);
     coins = req.body.coins;
     console.log('coins',coins);
+    console.log('amount',amount);
+    console.log('here');
     //return false;
     accountController.addTrustline(icoToken,caSecret,amount,function(error,response){
         if(error)
         {
-            res.json({message: error.message, code: 400, transaction_id: transactionId}); 
+            res.json({message: error.message, code: 400}); 
             return false;
         }
         if(response){
