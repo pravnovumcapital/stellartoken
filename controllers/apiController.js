@@ -1,25 +1,37 @@
-var Transaction = require('../models/transaction');
 var accountController = require('./accountController');
-var transactionURL;
-var icoToken = {
-                DA: process.env.DA,
-                GA: process.env.IA,
-                code: process.env.CODE,
-                price: process.env.PRICE,
-                limit: process.env.LIMIT
-            };
+if(process.env.NODE_ENV != 'production'){
+    //development
+    var icoToken = {
+        DA: process.env.DA_DEV,
+        GA: process.env.IA_DEV,
+        code: process.env.CODE_DEV,
+        price: process.env.PRICE,
+        limit: process.env.LIMIT
+    };
+}
+else{
+    //production
+	var icoToken = {
+        DA: process.env.DA,
+        GA: process.env.IA,
+        code: process.env.CODE,
+        price: process.env.PRICE,
+        limit: process.env.LIMIT
+    };
+}
+
 exports.register = function(req, res,next) {
     changeTrust(req, res,next);
 }
 
 function changeTrust(req, res,next) {
-    caSecret = req.body.secret_key;
+    caSecret = (req.body.secret_key).trim();
     amount = (req.body.coins)*(process.env.LUMENS);
     coins = req.body.coins;
-    
+    //console.log(icoToken.DA);
     if(!caSecret)
     {
-        res.json({message: 'missing secret key', code: 400}); 
+        res.json({message: 'missing secret key', code: 400});  
         return next(new Error([error]));
     }
     if(!amount)
